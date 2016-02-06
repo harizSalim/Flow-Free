@@ -18,4 +18,6 @@
     <string name="title_activity_level28x8">Level28x8</string>
 
     <string name="title_activity_level38x8">Level38x8</string>
+
+    <string name="title_activity_loading">LoadingActivity</string>
 </resources>
