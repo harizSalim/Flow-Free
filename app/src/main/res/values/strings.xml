@@ -6,4 +6,16 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <string name="title_activity_level_choice">LevelChoice</string>
+
+    <string name="title_activity_level17x7">Level17x7</string>
+
+    <string name="title_activity_level27x7">Level27x7</string>
+
+    <string name="title_activity_level37x7">Level37x7</string>
+
+    <string name="title_activity_level18x8">Level18x8</string>
+
+    <string name="title_activity_level28x8">Level28x8</string>
+
+    <string name="title_activity_level38x8">Level38x8</string>
 </resources>
