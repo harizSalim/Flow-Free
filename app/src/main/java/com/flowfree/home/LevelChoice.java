@@ -1,9 +1,12 @@
 package com.flowfree.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.flowfree.levels.Level17x7;
+import com.flowfree.levels.Level18x8;
 import com.game.flowfree.R;
 
 /**
@@ -45,5 +48,15 @@ public class LevelChoice extends AppCompatActivity {
 
 
 
+    }
+    public void regularButtonPressed(View view){
+
+        startActivity(new Intent(this, Level17x7.class));
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+    public void advancedButtonPressed(View view){
+
+        startActivity(new Intent(this, Level18x8.class));
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }
