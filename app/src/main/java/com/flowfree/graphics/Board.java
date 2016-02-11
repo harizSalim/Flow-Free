@@ -17,9 +17,13 @@ import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.game.flowfree.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Board extends View {
 
@@ -31,15 +35,12 @@ public class Board extends View {
     private Paint paintPath = new Paint();
     private Paint paintCircles = new Paint();
     private Path path = new Path();
-    //private Flow currentFlow = null;
+    private Points currentPoint = null;
     private int actualLevelNumber;
-    //private Challenge challenge;
-    //private Puzzle puzzle;
-    //private ArrayList<Flow> flows;
+    private ArrayList<Points> points;
     private MediaPlayer mp;
     private Vibrator vb;
     private boolean vibrate;
-    //private int moves;
     private int[] couleur, corX, corY;
 
     public Board(Context context, AttributeSet attrs) {
@@ -85,9 +86,16 @@ public class Board extends View {
         return row * this.cellHeight + getPaddingTop();
     }
 
+    public void setPoints(int[] couleur, int[] corX, int[] corY) {
+        this.couleur = couleur;
+        this.corX = corX;
+        this.corY = corY;
+    }
+
     public void initializeBoard(int level, int numCells) {
         this.actualLevelNumber = level;
         this.NUM_CELLS = numCells;
+        this.points = new ArrayList<Points>();
         this.invalidate();
     }
 
@@ -103,12 +111,6 @@ public class Board extends View {
                 size + getPaddingTop() + getPaddingBottom());
 
         this.paintPath.setStrokeWidth(cellWidth / 4);
-    }
-
-    public void setPoints(int[] couleur, int[] corX, int[] corY) {
-        this.couleur = couleur;
-        this.corX = corX;
-        this.corY = corY;
     }
 
     @Override
@@ -138,13 +140,33 @@ public class Board extends View {
             paintCircles.setColor(couleur[i]);
             canvas.drawCircle(colToX(corX[i * 2]) + cellWidth / 2, rowToY(corY[i * 2]) + cellHeight / 2, cellWidth / 4, paintCircles);
             canvas.drawCircle(colToX(corX[i * 2 + 1]) + cellWidth / 2, rowToY(corY[i * 2 + 1]) + cellHeight / 2, cellWidth / 4, paintCircles);
+
+            Points point = new Points(new Cordonnee(corX[i * 2], corY[i * 2]), new Cordonnee(corX[i * 2 + 1], corY[i * 2 + 1]), couleur[i]);
+            points.add(point);
+        }
+
+        for (Points point : this.points) {
+            path.reset();
+            paintPath.setColor(point.getCouleur());
+            if (null != point.getCellPath() && point.getCellPath().size() > 0) {
+                List<Cordonnee> colist = point.getCellPath().getCordonnees();
+                Cordonnee co = colist.get(0);
+                path.moveTo(colToX(co.getCol()) + cellWidth / 2,
+                        rowToY(co.getRow()) + cellHeight / 2);
+                for (int j = 1; j < colist.size(); j++) {
+                    co = colist.get(j);
+                    path.lineTo(colToX(co.getCol()) + cellWidth / 2,
+                            rowToY(co.getRow()) + cellHeight / 2);
+                }
+            }
+            canvas.drawPath(path, paintPath);
         }
 
     }
 
-    /*public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event) {
 
-        int x = (int) event.getX();         // NOTE: event.getHistorical... might be needed.
+        int x = (int) event.getX();
         int y = (int) event.getY();
         int c = xToCol(x);
         int r = yToRow(y);
@@ -155,53 +177,51 @@ public class Board extends View {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-            Coordinate pressed = new Coordinate(c, r);
-            Flow onPoint = isInFlowPoints(pressed);
-            Flow onPath = isInFlowPaths(pressed);
+            Cordonnee touche = new Cordonnee(c, r);
+            Points onPoint = isInFlowPoints(touche);
+            Points onPath = isInFlowPaths(touche);
             if (onPath != null) {
-                onPath.getCellPath().append(new Coordinate(c, r));
-                currentFlow = onPath;
-                moves++;
+                onPath.getCellPath().append(new Cordonnee(c, r));
+                currentPoint = onPath;
             } else if (onPoint != null) {
                 mp.start();
                 if (vibrate) {
-                    vb.vibrate(100);
+                    //vb.vibrate(100);
                 }
                 CellPath newCellPath = new CellPath();
-                newCellPath.append(new Coordinate(c, r));
+                newCellPath.append(new Cordonnee(c, r));
                 onPoint.setCellPath(newCellPath);
-                currentFlow = onPoint;
-                moves++;
+                currentPoint = onPoint;
             } else {
-                currentFlow = null;
+                currentPoint = null;
             }
             this.invalidate();
 
         } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            if (currentFlow != null) {
-                if (null != currentFlow.getCellPath() && !currentFlow.getCellPath().isEmpty()) {
-                    Coordinate movedTo = new Coordinate(c, r);
-                    List<Coordinate> coordinateList = currentFlow.getCellPath().getCoordinates();
-                    Coordinate last = coordinateList.get(coordinateList.size() - 1);
-                    Flow cross = isInFlowPaths(movedTo);
-                    Flow onPoint = isInFlowPoints(movedTo);
+            if (currentPoint != null) {
+                if (null != currentPoint.getCellPath() && !currentPoint.getCellPath().isEmpty()) {
+                    Cordonnee movedTo = new Cordonnee(c, r);
+                    List<Cordonnee> coordinateList = currentPoint.getCellPath().getCordonnees();
+                    Cordonnee last = coordinateList.get(coordinateList.size() - 1);
+                    Points cross = isInFlowPaths(movedTo);
+                    Points onPoint = isInFlowPoints(movedTo);
                     if (areNeighbours(last.getCol(), last.getRow(), c, r) &&
                             //(cross == null || cross == currentFlow) && //check if no other path is crossed
-                            !(currentFlow.finished() && cross != currentFlow) && //check if not extending current path over the endpoint
-                            (onPoint == null || onPoint == currentFlow)) { //check if no other point is crossed
-                        currentFlow.getCellPath().append(movedTo);
-                        if (cross != null && cross != currentFlow) {
+                            !(currentPoint.finished() && cross != currentPoint) && //check if not extending current path over the endpoint
+                            (onPoint == null || onPoint == currentPoint)) { //check if no other point is crossed
+                        currentPoint.getCellPath().append(movedTo);
+                        if (cross != null && cross != currentPoint) {
                             cross.getCellPath().removeFrom(movedTo);
                         }
                         //check if all flows have been finished
                         boolean finished = true;
-                        if (onPoint == currentFlow) {
+                        if (onPoint == currentPoint) {
                             mp.start();
                             if (vibrate) {
                                 vb.vibrate(100);
                             }
-                            for (Flow flow : this.flows) {
-                                if (!flow.finished()) {
+                            for (Points point : this.points) {
+                                if (!point.finished()) {
                                     finished = false;
                                 }
                             }
@@ -209,7 +229,7 @@ public class Board extends View {
                             if (finished) {
                                 for (int i = 0; i < NUM_CELLS; i++) {
                                     for (int j = 0; j < NUM_CELLS; j++) {
-                                        if (null == isInFlowPaths(new Coordinate(i, j))) {
+                                        if (null == isInFlowPaths(new Cordonnee(i, j))) {
                                             finished = false;
                                             break;
                                         }
@@ -224,12 +244,11 @@ public class Board extends View {
                                 //  fa.setLevelHighscore(puzzle.getChallenge().getPack().getName(), puzzle.getChallenge().getName(),
                                 //        puzzle.getId(), moves);
                             }
-                            moves = 0;
                             //long id = fa.setLevelDone(puzzle.getChallenge().getPack().getName(), puzzle.getChallenge().getName(),
                             //       puzzle.getId(), true);
 
                             // custom dialog
-                            final Dialog dialog = new Dialog(getContext());
+                            /*final Dialog dialog = new Dialog(getContext());
                             //dialog.setContentView(R.layout.level_won_dialog_layout);
                             dialog.setTitle("Congrats - YOU WON ...");
 
@@ -261,46 +280,44 @@ public class Board extends View {
                                 });*//*
 
 
-                            dialog.show();
+                            dialog.show();*/
                         }
                     }
                     this.invalidate();
                 }
             }
         }
-        //}
 
         return true;
-    }*/
+    }
 
     public void setColor(int color) {
         paintPath.setColor(color);
         invalidate();
     }
 
-
-    //Returns a flow if the flow has a point at the given coordinate
-    //otherwise returns null
-    /*public Flow isInFlowPoints(Coordinate co) {
-        for (Flow flow : this.flows) {
-            if (flow.getStart().equals(co) || flow.getEnd().equals(co)) {
-                return flow;
+    public Points isInFlowPoints(Cordonnee co) {
+        for (Points point : this.points) {
+            if (point.getX().equals(co) || point.getY().equals(co)) {
+                return point;
             }
         }
         return null;
     }
 
-    //Returns a flow if the cellpath of the flow contains this coordinate
-    //otherwise returns null
-    public Flow isInFlowPaths(Coordinate co) {
-        for (Flow flow : this.flows) {
-            if (null != flow.getCellPath()) {
-                if (flow.getCellPath().contains(co)) {
-                    return flow;
+    public Points isInFlowPaths(Cordonnee co) {
+        for (Points point : this.points) {
+            if (null != point.getCellPath()) {
+                if (point.getCellPath().contains(co)) {
+                    return point;
                 }
             }
         }
         return null;
-    }*/
+    }
+
+    private boolean areNeighbours(int c1, int r1, int c2, int r2) {
+        return Math.abs(c1 - c2) + Math.abs(r1 - r2) == 1;
+    }
 }
 

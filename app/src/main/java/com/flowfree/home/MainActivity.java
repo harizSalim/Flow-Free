@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
+        //mContentView = findViewById(R.id.fullscreen_content);
 
         //MediaPlayer for button-sound
         mediaPlayer = MediaPlayer.create(this, R.raw.button_pressed);

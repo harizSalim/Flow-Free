@@ -13,14 +13,6 @@
         android:orientation="horizontal"
         android:background="#0099cc">
 
-        <Button
-            android:id="@+id/game_back_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:onClick="backButtonPressed"
-            android:background="@drawable/left_arrow_white"
-            android:paddingLeft="10pt" />
-
         <TextView
             android:id="@+id/game_level_title"
             android:layout_width="match_parent"
@@ -51,19 +43,31 @@
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/game_previous_level"
+            android:layout_marginTop="20dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/left_arrow_white"
+            android:onClick="backButtonPressed"
+            />
 
         <Button
             android:id="@+id/game_reset"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="40dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="20dp"
             android:background="@drawable/reset_flows_white"
-            android:onClick="resetPressed" />
+            android:layout_toRightOf="@id/game_previous_level"
+            android:onClick="resetPressed"
+            />
+
 
     </RelativeLayout>
 
