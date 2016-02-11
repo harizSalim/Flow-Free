@@ -1,50 +1,41 @@
 package com.flowfree.levels;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.flowfree.graphics.Board;
 import com.game.flowfree.R;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
+
 public class Level28x8 extends AppCompatActivity {
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
-    private static final boolean AUTO_HIDE = true;
-
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
-    /**
-     * Some older devices needs a small delay between UI widget updates
-     * and a change of the status and navigation bar.
-     */
-    private static final int UI_ANIMATION_DELAY = 300;
-
-    private View mContentView;
-    private View mControlsView;
-    private boolean mVisible;
+    private Board board;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_level28x8);
+        setContentView(R.layout.activity_level17x7);
+        int couleurs[] = {Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW, Color.MAGENTA};
+        int corX[] = {0, 0, 0, 5, 2, 4, 2, 4, 1, 4};
+        int corY[] = {1, 6, 5, 5, 2, 3, 4, 5, 5, 4};
 
-        mVisible = true;
-        mControlsView = findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
-
+        this.board = (Board) findViewById(R.id.board);
+        board.setPoints(couleurs, corX, corY);
+        board.initializeBoard(1, 8);
+        board.setColor(Color.parseColor("#0099cc"));
 
     }
 
-    
+    public void backButtonPressed(View view) {
+        finish();
+        this.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    public void resetPressed(View view) {
+        finish();
+        startActivity(getIntent());
+    }
+
 }
