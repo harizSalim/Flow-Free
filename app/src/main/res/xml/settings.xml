@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+            android:title="Sound"
+            android:key="sound"
+            >
+        <SwitchPreference
+                android:key="sound_onoff"
+                android:summary="Turn sound on/off"
+                android:title="Sound"
+                android:defaultValue="true"
+                />
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:title="Vibration"
+            android:key="vibration"
+            >
+        <SwitchPreference
+                android:key="vibration_onoff"
+                android:summary="Turn vibration on/off"
+                android:title="Vibration"
+                android:defaultValue="true"
+                />
+    </PreferenceCategory>
+</PreferenceScreen>
