@@ -230,40 +230,41 @@ public class Board extends View {
                                     }
 
                                 }
+                                final Dialog dialog = new Dialog(getContext());
+                                dialog.setContentView(R.layout.activity_level_won);
+                                dialog.setTitle("BRAVO!! Vous avez réussi ce nivrau");
+
+                                Button againButton = (Button) dialog.findViewById(R.id.level_again);
+                                Button backMenuButton = (Button) dialog.findViewById(R.id.back_to_menu);
+                                Button nextLevelButton = (Button) dialog.findViewById(R.id.next_level);
+
+                                againButton.setOnClickListener(new OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        //reset();
+                                        dialog.dismiss();
+                                    }
+                                });
+                                backMenuButton.setOnClickListener(new OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                        mp.release();
+                                        ((Activity) getContext()).finish();
+                                    }
+                                });
+                                nextLevelButton.setOnClickListener(new OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                        //setNextPuzzle();
+                                    }
+                                });
+
+                                dialog.show();
                             }
 
-                            final Dialog dialog = new Dialog(getContext());
-                            dialog.setContentView(R.layout.activity_level_won);
-                            dialog.setTitle("BRAVO!! Vous avez réussi ce nivrau");
 
-                            Button againButton = (Button) dialog.findViewById(R.id.level_again);
-                            Button backMenuButton = (Button) dialog.findViewById(R.id.back_to_menu);
-                            Button nextLevelButton = (Button) dialog.findViewById(R.id.next_level);
-
-                            againButton.setOnClickListener(new OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    //reset();
-                                    dialog.dismiss();
-                                }
-                            });
-                            backMenuButton.setOnClickListener(new OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-                                    mp.release();
-                                    ((Activity) getContext()).finish();
-                                }
-                            });
-                            nextLevelButton.setOnClickListener(new OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-                                    //setNextPuzzle();
-                                }
-                            });
-
-                            dialog.show();
                         }
                     }
                     this.invalidate();
