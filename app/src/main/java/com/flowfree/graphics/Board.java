@@ -1,5 +1,7 @@
 package com.flowfree.graphics;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
@@ -11,9 +13,9 @@ import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 
 import com.game.flowfree.R;
 
@@ -91,6 +93,11 @@ public class Board extends View {
         this.actualLevelNumber = level;
         this.NUM_CELLS = numCells;
         this.points = new ArrayList<Points>();
+        for (int i = 0; i < couleur.length; i++) {
+            Points point;
+            point = new Points(new Cordonnee(corX[i * 2], corY[i * 2]), new Cordonnee(corX[i * 2 + 1], corY[i * 2 + 1]), couleur[i]);
+            points.add(point);
+        }
         this.invalidate();
     }
 
@@ -120,7 +127,6 @@ public class Board extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        //draw the grid
         for (int r = 0; r < NUM_CELLS; ++r) {
             for (int c = 0; c < NUM_CELLS; ++c) {
                 int x = colToX(c);
@@ -130,14 +136,10 @@ public class Board extends View {
             }
         }
 
-        //draw startPoints
         for (int i = 0; i < couleur.length; i++) {
             paintCircles.setColor(couleur[i]);
             canvas.drawCircle(colToX(corX[i * 2]) + cellWidth / 2, rowToY(corY[i * 2]) + cellHeight / 2, cellWidth / 4, paintCircles);
             canvas.drawCircle(colToX(corX[i * 2 + 1]) + cellWidth / 2, rowToY(corY[i * 2 + 1]) + cellHeight / 2, cellWidth / 4, paintCircles);
-
-            Points point = new Points(new Cordonnee(corX[i * 2], corY[i * 2]), new Cordonnee(corX[i * 2 + 1], corY[i * 2 + 1]), couleur[i]);
-            points.add(point);
         }
 
         for (Points point : this.points) {
@@ -147,13 +149,10 @@ public class Board extends View {
             if (null != point.getCellPath() && point.getCellPath().size() > 0) {
                 List<Cordonnee> colist = point.getCellPath().getCordonnees();
                 Cordonnee co = colist.get(0);
-                Log.i("",""+colToX(co.getCol()));
-                path.moveTo(colToX(co.getCol()) + cellWidth / 2,
-                        rowToY(co.getRow()) + cellHeight / 2);
+                path.moveTo(colToX(co.getCol()) + cellWidth / 2, rowToY(co.getRow()) + cellHeight / 2);
                 for (int j = 1; j < colist.size(); j++) {
                     co = colist.get(j);
-                    path.lineTo(colToX(co.getCol()) + cellWidth / 2,
-                            rowToY(co.getRow()) + cellHeight / 2);
+                    path.lineTo(colToX(co.getCol()) + cellWidth / 2, rowToY(co.getRow()) + cellHeight / 2);
                 }
             }
             canvas.drawPath(path, paintPath);
@@ -232,50 +231,39 @@ public class Board extends View {
 
                                 }
                             }
-                            if (finished) {
-                                //int highscore = fa.getLevelHighscore(puzzle.getChallenge().getPack().getName(), puzzle.getChallenge().getName(),
-                                //       puzzle.getId());
-                                //if (moves < highscore || highscore <= 0) {
-                                //  fa.setLevelHighscore(puzzle.getChallenge().getPack().getName(), puzzle.getChallenge().getName(),
-                                //        puzzle.getId(), moves);
-                            }
-                            //long id = fa.setLevelDone(puzzle.getChallenge().getPack().getName(), puzzle.getChallenge().getName(),
-                            //       puzzle.getId(), true);
 
-                            // custom dialog
-                            /*final Dialog dialog = new Dialog(getContext());
-                            //dialog.setContentView(R.layout.level_won_dialog_layout);
-                            dialog.setTitle("Congrats - YOU WON ...");
+                            final Dialog dialog = new Dialog(getContext());
+                            dialog.setContentView(R.layout.activity_level_won);
+                            dialog.setTitle("BRAVO!! Vous avez réussi ce nivrau");
 
-                                *//*Button againButton = (Button) dialog.findViewById(R.id.level_again);
-                                Button backMenuButton = (Button) dialog.findViewById(R.id.back_to_menu);
-                                Button nextLevelButton = (Button) dialog.findViewById(R.id.next_level);
+                            Button againButton = (Button) dialog.findViewById(R.id.level_again);
+                            Button backMenuButton = (Button) dialog.findViewById(R.id.back_to_menu);
+                            Button nextLevelButton = (Button) dialog.findViewById(R.id.next_level);
 
-                                againButton.setOnClickListener(new OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        reset();
-                                        dialog.dismiss();
-                                    }
-                                });
-                                backMenuButton.setOnClickListener(new OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        dialog.dismiss();
-                                        mp.release();
-                                        ((Activity) getContext()).finish();
-                                    }
-                                });
-                                nextLevelButton.setOnClickListener(new OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        dialog.dismiss();
-                                        setNextPuzzle();
-                                    }
-                                });*//*
+                            againButton.setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    //reset();
+                                    dialog.dismiss();
+                                }
+                            });
+                            backMenuButton.setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    mp.release();
+                                    ((Activity) getContext()).finish();
+                                }
+                            });
+                            nextLevelButton.setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    //setNextPuzzle();
+                                }
+                            });
 
-
-                            dialog.show();*/
+                            dialog.show();
                         }
                     }
                     this.invalidate();

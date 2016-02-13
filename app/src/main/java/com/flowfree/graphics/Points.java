@@ -15,7 +15,6 @@ public class Points implements Serializable {
         this.setCouleur(couleur);
     }
 
-
     public Cordonnee getX() {
         return X;
     }
