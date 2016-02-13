@@ -21,4 +21,6 @@
     <string name="title_activity_level38x8">Level38x8</string>
 
     <string name="title_activity_loading">LoadingActivity</string>
+
+    <string name="title_activity_level_won">LevelWon</string>
 </resources>

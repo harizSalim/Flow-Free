@@ -1,9 +1,3 @@
-/*
-+ @author: Joerg Schoba, Peter Tillian, Luuk van Egeraat
-* @project: Flow free implementation in course App Development - Android at Rekjavik University 2014
-* @version: 1.0
-*/
-
 package com.flowfree.graphics;
 
 import java.io.Serializable;
