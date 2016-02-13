@@ -1,9 +1,3 @@
-/*
-+ @author: Joerg Schoba, Peter Tillian, Luuk van Egeraat
-* @project: Flow free implementation in course App Development - Android at Rekjavik University 2014
-* @version: 1.0
-*/
-
 package com.flowfree.graphics;
 
 import android.content.Context;
@@ -17,6 +11,7 @@ import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -148,9 +143,11 @@ public class Board extends View {
         for (Points point : this.points) {
             path.reset();
             paintPath.setColor(point.getCouleur());
+
             if (null != point.getCellPath() && point.getCellPath().size() > 0) {
                 List<Cordonnee> colist = point.getCellPath().getCordonnees();
                 Cordonnee co = colist.get(0);
+                Log.i("",""+colToX(co.getCol()));
                 path.moveTo(colToX(co.getCol()) + cellWidth / 2,
                         rowToY(co.getRow()) + cellHeight / 2);
                 for (int j = 1; j < colist.size(); j++) {
@@ -176,18 +173,16 @@ public class Board extends View {
         }
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
             Cordonnee touche = new Cordonnee(c, r);
             Points onPoint = isInFlowPoints(touche);
             Points onPath = isInFlowPaths(touche);
+
             if (onPath != null) {
                 onPath.getCellPath().append(new Cordonnee(c, r));
                 currentPoint = onPath;
             } else if (onPoint != null) {
                 mp.start();
-                if (vibrate) {
-                    //vb.vibrate(100);
-                }
+                //if (vibrate) {vb.vibrate(100);}
                 CellPath newCellPath = new CellPath();
                 newCellPath.append(new Cordonnee(c, r));
                 onPoint.setCellPath(newCellPath);
@@ -218,7 +213,7 @@ public class Board extends View {
                         if (onPoint == currentPoint) {
                             mp.start();
                             if (vibrate) {
-                                vb.vibrate(100);
+                                //vb.vibrate(100);
                             }
                             for (Points point : this.points) {
                                 if (!point.finished()) {

@@ -16,10 +16,10 @@ public class Level27x7 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_level17x7);
-        int couleurs[] = {Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW, Color.MAGENTA};
-        int corX[] = {0, 0, 0, 5, 2, 4, 2, 4, 1, 4};
-        int corY[] = {1, 6, 5, 5, 2, 3, 4, 5, 5, 4};
+        setContentView(R.layout.activity_level27x7);
+        int couleurs[] = {Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW, Color.MAGENTA, Color.GRAY, Color.BLACK};
+        int corX[] = {0, 6, 5, 5, 6, 6, 6, 1, 3, 5, 1, 2, 2, 5};
+        int corY[] = {5, 3, 4, 6, 4, 6, 2, 5, 5, 2, 1, 5, 2, 1};
 
         this.board = (Board) findViewById(R.id.board);
         board.setPoints(couleurs, corX, corY);

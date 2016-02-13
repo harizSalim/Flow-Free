@@ -16,10 +16,10 @@ public class Level18x8 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_level17x7);
-        int couleurs[] = {Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW, Color.MAGENTA};
-        int corX[] = {0, 0, 0, 5, 2, 4, 2, 4, 1, 4};
-        int corY[] = {1, 6, 5, 5, 2, 3, 4, 5, 5, 4};
+        setContentView(R.layout.activity_level18x8);
+        int couleurs[] = {Color.DKGRAY, Color.GREEN, Color.RED, Color.YELLOW, Color.MAGENTA, Color.BLUE, Color.GRAY, Color.BLACK, Color.CYAN};
+        int corX[] = {0, 0, 0, 2, 4, 4, 0, 6, 2, 3, 5, 7, 7, 7, 5, 6, 2, 5};
+        int corY[] = {0, 2, 1, 2, 0, 5, 3, 3, 5, 4, 1, 1, 2, 7, 2, 1, 4, 3};
 
         this.board = (Board) findViewById(R.id.board);
         board.setPoints(couleurs, corX, corY);
