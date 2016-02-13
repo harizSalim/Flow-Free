@@ -51,12 +51,16 @@ public class LevelChoice extends AppCompatActivity {
     }
     public void regularButtonPressed(View view){
 
-        startActivity(new Intent(this, Level17x7.class));
+        startActivity(new Intent(this, LevelSelection7.class));
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
     public void advancedButtonPressed(View view){
 
-        startActivity(new Intent(this, Level18x8.class));
+        startActivity(new Intent(this, LevelSelection8.class));
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+    public void backdButtonPressed(View view){
+
+       finish();
     }
 }

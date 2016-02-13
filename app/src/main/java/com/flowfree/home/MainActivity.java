@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.game.flowfree.R;
 
@@ -77,6 +78,15 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer.start();
         startActivity(new Intent(this, LevelChoice.class));
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+    public void buttonAboutPressed(View view){
+        mediaPlayer.start();
+        Toast.makeText(getApplicationContext(), "About Screen", Toast.LENGTH_SHORT).show();
+    }
+
+    public void buttonInstructionsPressed(View view){
+        mediaPlayer.start();
+        Toast.makeText(getApplicationContext(), "Instructions Screen", Toast.LENGTH_SHORT).show();
     }
 
 

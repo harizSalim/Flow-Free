@@ -16,20 +16,49 @@
 
         <Button
             android:id="@+id/playButton"
-
             android:layout_width="250dp"
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
-
             android:layout_marginTop="200dp"
             android:onClick="buttonPressed"
-
             android:text="Play"
             android:textColor="#029acc"
-
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:background="#ffffff" />
+        <Button
+            android:id="@+id/instructions"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:onClick="buttonInstructionsPressed"
+            android:text="Instructions"
+            android:layout_below="@id/playButton"
 
+            android:textColor="#029acc"
+            android:textSize="20sp"
+            android:background="#ffffff" />
+        <Button
+            android:id="@+id/about"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:onClick="buttonAboutPressed"
+            android:text="About"
+            android:layout_below="@id/instructions"
+
+            android:textColor="#029acc"
+            android:textSize="20sp"
+            android:background="#ffffff" />
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:id="@+id/imageView"
+            android:src="@mipmap/flow"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
         <!-- This FrameLayout insets its children based on system windows using
              android:fitsSystemWindows. -->
         <FrameLayout
