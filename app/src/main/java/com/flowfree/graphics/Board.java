@@ -3,6 +3,7 @@ package com.flowfree.graphics;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -17,10 +18,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import com.flowfree.levels.Level27x7;
 import com.game.flowfree.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.v4.app.ActivityCompat.startActivity;
 
 public class Board extends View {
 
@@ -33,6 +37,7 @@ public class Board extends View {
     private Paint paintCircles = new Paint();
     private Path path = new Path();
     private Points currentPoint = null;
+    public String currentLevel;
     private int actualLevelNumber;
     private ArrayList<Points> points;
     private MediaPlayer mp;
@@ -47,9 +52,9 @@ public class Board extends View {
         this.paintGrid.setColor(Color.WHITE);
         this.paintGrid.setAntiAlias(true);
 
-        this.paintPath.setStrokeCap(Paint.Cap.ROUND);
-        this.paintPath.setStrokeJoin(Paint.Join.ROUND);
-        this.paintPath.setAntiAlias(true);
+        //this.paintPath.setStrokeCap(Paint.Cap.ROUND);
+        //this.paintPath.setStrokeJoin(Paint.Join.ROUND);
+        //this.paintPath.setAntiAlias(true);
 
         mp = MediaPlayer.create(getContext(), R.raw.button_pressed);
 
@@ -123,10 +128,11 @@ public class Board extends View {
 
         this.paintPath.setStrokeWidth(cellWidth / 4);
     }
-
     @Override
     protected void onDraw(Canvas canvas) {
 
+
+        //draw the grid
         for (int r = 0; r < NUM_CELLS; ++r) {
             for (int c = 0; c < NUM_CELLS; ++c) {
                 int x = colToX(c);
@@ -135,17 +141,21 @@ public class Board extends View {
                 canvas.drawRect(rect, paintGrid);
             }
         }
-
         for (int i = 0; i < couleur.length; i++) {
             paintCircles.setColor(couleur[i]);
             canvas.drawCircle(colToX(corX[i * 2]) + cellWidth / 2, rowToY(corY[i * 2]) + cellHeight / 2, cellWidth / 4, paintCircles);
             canvas.drawCircle(colToX(corX[i * 2 + 1]) + cellWidth / 2, rowToY(corY[i * 2 + 1]) + cellHeight / 2, cellWidth / 4, paintCircles);
         }
-
+        //draw all cellpaths
         for (Points point : this.points) {
             path.reset();
             paintPath.setColor(point.getCouleur());
+            paintPath.setDither(true);
 
+            paintPath.setStyle(Paint.Style.STROKE);
+            paintPath.setStrokeJoin(Paint.Join.ROUND);
+            paintPath.setStrokeCap(Paint.Cap.ROUND);
+            paintPath.setStrokeWidth(10);
             if (null != point.getCellPath() && point.getCellPath().size() > 0) {
                 List<Cordonnee> colist = point.getCellPath().getCordonnees();
                 Cordonnee co = colist.get(0);
@@ -155,10 +165,12 @@ public class Board extends View {
                     path.lineTo(colToX(co.getCol()) + cellWidth / 2, rowToY(co.getRow()) + cellHeight / 2);
                 }
             }
+            System.out.println(path);
             canvas.drawPath(path, paintPath);
         }
 
     }
+
 
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -211,9 +223,9 @@ public class Board extends View {
                         boolean finished = true;
                         if (onPoint == currentPoint) {
                             mp.start();
-                            if (vibrate) {
+                         /*   if (vibrate) {
                                 //vb.vibrate(100);
-                            }
+                            }*/
                             for (Points point : this.points) {
                                 if (!point.finished()) {
                                     finished = false;
@@ -232,7 +244,7 @@ public class Board extends View {
                                 }
                                 final Dialog dialog = new Dialog(getContext());
                                 dialog.setContentView(R.layout.activity_level_won);
-                                dialog.setTitle("BRAVO!! Vous avez réussi ce nivrau");
+                                dialog.setTitle("Congratulations!!");
 
                                 Button againButton = (Button) dialog.findViewById(R.id.level_again);
                                 Button backMenuButton = (Button) dialog.findViewById(R.id.back_to_menu);
@@ -241,7 +253,7 @@ public class Board extends View {
                                 againButton.setOnClickListener(new OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        //reset();
+                                        reset();
                                         dialog.dismiss();
                                     }
                                 });
@@ -257,7 +269,7 @@ public class Board extends View {
                                     @Override
                                     public void onClick(View v) {
                                         dialog.dismiss();
-                                        //setNextPuzzle();
+                                         setNextLevel();
                                     }
                                 });
 
@@ -303,5 +315,19 @@ public class Board extends View {
     private boolean areNeighbours(int c1, int r1, int c2, int r2) {
         return Math.abs(c1 - c2) + Math.abs(r1 - r2) == 1;
     }
+    public void reset() {
+        for (Points point : points) {
+            if (point.getCellPath() != null) {
+                point.getCellPath().reset();
+            }
+        }
+    this.invalidate();
+    }
+    public void setNextLevel() {
+       // System.out.println(this.currentLevel);
+     //   startActivity(new Intent(this, Level27x7.class));
+       // this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
+
 }
 

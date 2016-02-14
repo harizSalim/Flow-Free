@@ -8,23 +8,25 @@
         android:id="@+id/next_level"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#000000"
+        android:background="#ffffff"
+        android:textColor="#0099cc"
         android:padding="5dp"
-        android:text=" Next Puzzle " />
+        android:text=" Next Level " />
 
     <View
         android:id="@+id/divider1"
         android:layout_width="fill_parent"
         android:layout_height="1dip"
         android:layout_below="@+id/next_level"
-        android:background="#FFFFFF" />
+        android:background="#0099cc" />
 
     <Button
         android:id="@+id/level_again"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/divider1"
-        android:background="#000000"
+        android:background="#ffffff"
+        android:textColor="#0099cc"
         android:padding="5dp"
         android:text=" Play again " />
 
@@ -33,14 +35,15 @@
         android:layout_width="fill_parent"
         android:layout_height="1dip"
         android:layout_below="@+id/level_again"
-        android:background="#FFFFFF" />
+        android:background="#0099cc" />
 
     <Button
         android:id="@+id/back_to_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/divider2"
-        android:background="#000000"
+        android:background="#ffffff"
+        android:textColor="#0099cc"
         android:padding="5dp"
         android:text=" Back to Menu " />
 
