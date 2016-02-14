@@ -1,6 +1,5 @@
 package com.flowfree.graphics;
 
-
 import java.io.Serializable;
 
 public class Points implements Serializable {
