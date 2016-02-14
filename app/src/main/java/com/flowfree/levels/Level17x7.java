@@ -23,7 +23,7 @@ public class Level17x7 extends AppCompatActivity {
 
         this.board = (Board) findViewById(R.id.board);
         board.setPoints(couleurs, corX, corY);
-        board.initializeBoard(17, 7);
+        board.initializeBoard(1, 7);
         board.setColor(Color.parseColor("#0099cc"));
         this.board.currentLevel="17x7";
 

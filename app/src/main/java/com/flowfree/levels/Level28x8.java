@@ -23,7 +23,7 @@ public class Level28x8 extends AppCompatActivity {
 
         this.board = (Board) findViewById(R.id.board);
         board.setPoints(couleurs, corX, corY);
-        board.initializeBoard(1, 8);
+        board.initializeBoard(2, 8);
         board.setColor(Color.parseColor("#0099cc"));
 
     }

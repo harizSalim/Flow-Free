@@ -18,13 +18,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import com.flowfree.levels.Level18x8;
 import com.flowfree.levels.Level27x7;
+import com.flowfree.levels.Level28x8;
+import com.flowfree.levels.Level37x7;
+import com.flowfree.levels.Level38x8;
 import com.game.flowfree.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.support.v4.app.ActivityCompat.startActivity;
 
 public class Board extends View {
 
@@ -128,6 +130,7 @@ public class Board extends View {
 
         this.paintPath.setStrokeWidth(cellWidth / 4);
     }
+
     @Override
     protected void onDraw(Canvas canvas) {
 
@@ -269,7 +272,7 @@ public class Board extends View {
                                     @Override
                                     public void onClick(View v) {
                                         dialog.dismiss();
-                                         setNextLevel();
+                                        setNextLevel();
                                     }
                                 });
 
@@ -315,18 +318,48 @@ public class Board extends View {
     private boolean areNeighbours(int c1, int r1, int c2, int r2) {
         return Math.abs(c1 - c2) + Math.abs(r1 - r2) == 1;
     }
+
     public void reset() {
         for (Points point : points) {
             if (point.getCellPath() != null) {
                 point.getCellPath().reset();
             }
         }
-    this.invalidate();
+        this.invalidate();
     }
+
     public void setNextLevel() {
-       // System.out.println(this.currentLevel);
-     //   startActivity(new Intent(this, Level27x7.class));
-       // this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        if (actualLevelNumber == 1) {
+            if (NUM_CELLS == 7) {
+                Intent intent = new Intent(getContext(), Level27x7.class);
+                super.getContext().startActivity(intent);
+            }
+            if (NUM_CELLS == 8) {
+                Intent intent = new Intent(getContext(), Level28x8.class);
+                super.getContext().startActivity(intent);
+            }
+        }
+        if (actualLevelNumber == 2) {
+            if (NUM_CELLS == 7) {
+                Intent intent = new Intent(getContext(), Level37x7.class);
+                super.getContext().startActivity(intent);
+            }
+            if (NUM_CELLS == 8) {
+                Intent intent = new Intent(getContext(), Level38x8.class);
+                super.getContext().startActivity(intent);
+            }
+        }
+        if (actualLevelNumber == 3) {
+            if (NUM_CELLS == 7) {
+                Intent intent = new Intent(getContext(), Level18x8.class);
+                super.getContext().startActivity(intent);
+            }
+            if (NUM_CELLS == 8) {
+                //Intent intent = new Intent(getContext(), Level28x8.class);
+                //super.getContext().startActivity(intent);
+            }
+        }
+        this.invalidate();
     }
 
 }
