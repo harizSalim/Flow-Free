@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import com.flowfree.levels.EndOfGame;
 import com.flowfree.levels.Level18x8;
 import com.flowfree.levels.Level27x7;
 import com.flowfree.levels.Level28x8;
@@ -346,7 +347,7 @@ public class Board extends View {
                 super.getContext().startActivity(intent);
             }
             if (actualLevelNumber == 3) {
-                Intent intent = new Intent(getContext(), Level18x8.class);
+                Intent intent = new Intent(getContext(), EndOfGame.class);
                 super.getContext().startActivity(intent);
             }
         }

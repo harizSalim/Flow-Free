@@ -23,4 +23,6 @@
     <string name="title_activity_loading">LoadingActivity</string>
 
     <string name="title_activity_level_won">LevelWon</string>
+
+    <string name="title_activity_end_of_game">EndOfGame</string>
 </resources>
