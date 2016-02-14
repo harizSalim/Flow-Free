@@ -2,7 +2,6 @@ package com.flowfree.home;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -40,7 +39,6 @@ public class LoadingActivity extends AppCompatActivity {
 
     SeekBar bar;
     TextView txtload;
-    MediaPlayer media;
     Activity activity;
     int i;
 
@@ -52,19 +50,12 @@ public class LoadingActivity extends AppCompatActivity {
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
-        //mContentView = findViewById(R.id.fullscreen_content);
-
         activity = this;
         bar = (SeekBar) findViewById(R.id.seekBar1);
         txtload = (TextView) findViewById(R.id.textView2);
-        media = MediaPlayer.create(LoadingActivity.this, R.raw.button_pressed);
-
     }
 
     protected void onResume() {
-        //
-
-        media.start();
         Thread t = new Thread() {
 
             @Override
@@ -100,7 +91,6 @@ public class LoadingActivity extends AppCompatActivity {
     }
 
     protected void onPause() {
-        media.release();
         finish();
         super.onPause();
 

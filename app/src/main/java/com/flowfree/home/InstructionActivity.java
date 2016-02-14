@@ -1,6 +1,5 @@
 package com.flowfree.home;
 
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +11,7 @@ import com.game.flowfree.R;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class MainActivity extends AppCompatActivity {
+public class InstructionActivity extends AppCompatActivity {
     private static final boolean AUTO_HIDE = true;
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
@@ -37,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        setContentView(R.layout.activity_instructions);
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
-
     }
 
     protected void onResume() {
@@ -49,22 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onDestroy() {
         super.onDestroy();
+
     }
 
-    public void buttonPressed(View view) {
-        startActivity(new Intent(this, LevelChoice.class));
-        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
-
-    public void buttonAboutPressed(View view) {
-        startActivity(new Intent(this, AboutActivity.class));
-        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
-
-    public void buttonInstructionsPressed(View view) {
-
-        startActivity(new Intent(this, InstructionActivity.class));
-        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    public void buttonBackPressed(View view) {
+        finish();
     }
 
 
