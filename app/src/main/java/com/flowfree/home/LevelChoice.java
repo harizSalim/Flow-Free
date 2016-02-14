@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.flowfree.levels.Level17x7;
-import com.flowfree.levels.Level18x8;
 import com.game.flowfree.R;
 
 /**
@@ -47,20 +45,22 @@ public class LevelChoice extends AppCompatActivity {
         //mContentView = findViewById(R.id.fullscreen_content);
 
 
-
     }
-    public void regularButtonPressed(View view){
+
+    public void regularButtonPressed(View view) {
 
         startActivity(new Intent(this, LevelSelection7.class));
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
-    public void advancedButtonPressed(View view){
+
+    public void advancedButtonPressed(View view) {
 
         startActivity(new Intent(this, LevelSelection8.class));
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
-    public void backdButtonPressed(View view){
 
-       finish();
+    public void backdButtonPressed(View view) {
+
+        finish();
     }
 }

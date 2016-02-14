@@ -32,15 +32,13 @@ public class LoadingActivity extends AppCompatActivity {
      * and a change of the status and navigation bar.
      */
     private static final int UI_ANIMATION_DELAY = 300;
-
-    private View mContentView;
-    private View mControlsView;
-    private boolean mVisible;
-
     SeekBar bar;
     TextView txtload;
     Activity activity;
     int i;
+    private View mContentView;
+    private View mControlsView;
+    private boolean mVisible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
