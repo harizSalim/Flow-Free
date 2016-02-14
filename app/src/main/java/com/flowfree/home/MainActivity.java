@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonAboutPressed(View view) {
-        startActivity(new Intent(this, AboutActivity.class));
+        //startActivity(new Intent(this, AboutActivity.class));
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 

@@ -18,13 +18,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import com.flowfree.levels.Level18x8;
 import com.flowfree.levels.Level27x7;
+import com.flowfree.levels.Level28x8;
+import com.flowfree.levels.Level37x7;
+import com.flowfree.levels.Level38x8;
 import com.game.flowfree.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.support.v4.app.ActivityCompat.startActivity;
 
 public class Board extends View {
 
@@ -51,10 +53,6 @@ public class Board extends View {
         this.paintGrid.setStyle(Paint.Style.STROKE);
         this.paintGrid.setColor(Color.WHITE);
         this.paintGrid.setAntiAlias(true);
-
-        //this.paintPath.setStrokeCap(Paint.Cap.ROUND);
-        //this.paintPath.setStrokeJoin(Paint.Join.ROUND);
-        //this.paintPath.setAntiAlias(true);
 
         mp = MediaPlayer.create(getContext(), R.raw.button_pressed);
 
@@ -324,9 +322,35 @@ public class Board extends View {
     this.invalidate();
     }
     public void setNextLevel() {
-       // System.out.println(this.currentLevel);
-     //   startActivity(new Intent(this, Level27x7.class));
-       // this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        if (NUM_CELLS == 7) {
+            if (actualLevelNumber == 1) {
+                Intent intent = new Intent(getContext(), Level27x7.class);
+                super.getContext().startActivity(intent);
+            }
+            if (actualLevelNumber == 2) {
+                Intent intent = new Intent(getContext(), Level37x7.class);
+                super.getContext().startActivity(intent);
+            }
+            if (actualLevelNumber == 3) {
+                Intent intent = new Intent(getContext(), Level18x8.class);
+                super.getContext().startActivity(intent);
+            }
+        }
+        if (NUM_CELLS == 8) {
+            if (actualLevelNumber == 1) {
+                Intent intent = new Intent(getContext(), Level28x8.class);
+                super.getContext().startActivity(intent);
+            }
+            if (actualLevelNumber == 2) {
+                Intent intent = new Intent(getContext(), Level38x8.class);
+                super.getContext().startActivity(intent);
+            }
+            if (actualLevelNumber == 3) {
+                Intent intent = new Intent(getContext(), Level18x8.class);
+                super.getContext().startActivity(intent);
+            }
+        }
+      this.invalidate();
     }
 
 }
