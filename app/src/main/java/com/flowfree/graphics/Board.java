@@ -127,6 +127,7 @@ public class Board extends View {
 
         this.paintPath.setStrokeWidth(cellWidth / 4);
     }
+
     @Override
     protected void onDraw(Canvas canvas) {
 
@@ -169,7 +170,6 @@ public class Board extends View {
         }
 
     }
-
 
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -314,6 +314,7 @@ public class Board extends View {
     private boolean areNeighbours(int c1, int r1, int c2, int r2) {
         return Math.abs(c1 - c2) + Math.abs(r1 - r2) == 1;
     }
+
     public void reset() {
         for (Points point : points) {
             if (point.getCellPath() != null) {
@@ -322,6 +323,7 @@ public class Board extends View {
         }
     this.invalidate();
     }
+
     public void setNextLevel() {
         if (NUM_CELLS == 7) {
             if (actualLevelNumber == 1) {
