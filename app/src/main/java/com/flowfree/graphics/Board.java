@@ -18,7 +18,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
-import com.flowfree.levels.EndOfGame;
 import com.flowfree.levels.Level18x8;
 import com.flowfree.levels.Level27x7;
 import com.flowfree.levels.Level28x8;
@@ -248,6 +247,18 @@ public class Board extends View {
                                 Button againButton = (Button) dialog.findViewById(R.id.level_again);
                                 Button backMenuButton = (Button) dialog.findViewById(R.id.back_to_menu);
                                 Button nextLevelButton = (Button) dialog.findViewById(R.id.next_level);
+                                if (NUM_CELLS == 8 && actualLevelNumber == 3)
+                                    nextLevelButton.setEnabled(false);
+                                else {
+                                    nextLevelButton.setOnClickListener(new OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                            dialog.dismiss();
+                                            setNextLevel();
+                                        }
+                                    });
+                                }
 
                                 againButton.setOnClickListener(new OnClickListener() {
                                     @Override
@@ -264,13 +275,7 @@ public class Board extends View {
                                         ((Activity) getContext()).finish();
                                     }
                                 });
-                                nextLevelButton.setOnClickListener(new OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        dialog.dismiss();
-                                         setNextLevel();
-                                    }
-                                });
+
 
                                 dialog.show();
                             }
@@ -321,7 +326,7 @@ public class Board extends View {
                 point.getCellPath().reset();
             }
         }
-    this.invalidate();
+        this.invalidate();
     }
 
     public void setNextLevel() {
@@ -348,12 +353,8 @@ public class Board extends View {
                 Intent intent = new Intent(getContext(), Level38x8.class);
                 super.getContext().startActivity(intent);
             }
-            if (actualLevelNumber == 3) {
-                Intent intent = new Intent(getContext(), EndOfGame.class);
-                super.getContext().startActivity(intent);
-            }
         }
-      this.invalidate();
+        this.invalidate();
     }
 
 }
