@@ -219,7 +219,7 @@ public class Board extends View {
                                             break;
                                         }
                                     }
-
+                                    this.activateNextLevels();
                                 }
                                 final Dialog dialog = new Dialog(getContext());
                                 dialog.setContentView(R.layout.activity_level_won);
@@ -252,12 +252,11 @@ public class Board extends View {
                                     @Override
                                     public void onClick(View v) {
                                         dialog.dismiss();
-                                        ((Activity) getContext()).finish();
+                                        goToHome();
                                     }
                                 });
 
-
-                                dialog.show();
+                            dialog.show();
                             }
                         }
                     }
@@ -308,22 +307,14 @@ public class Board extends View {
     }
 
     private void setNextLevel() {
-        LevelsDataBase levelsDb = new LevelsDataBase(getContext());
-        levelsDb.open();
-        Level next = new Level();
+
         if (NUM_CELLS == 7) {
             if (actualLevelNumber == 1) {
-                next.setStatus(1);
-                next.setId(27);
-                levelsDb.updateLevel(27, next);
                 Intent intent = new Intent(getContext(), Level27x7.class);
                 super.getContext().startActivity(intent);
 
             }
             if (actualLevelNumber == 2) {
-                next.setStatus(1);
-                next.setId(37);
-                levelsDb.updateLevel(37, next);
                 Intent intent = new Intent(getContext(), Level37x7.class);
                 super.getContext().startActivity(intent);
             }
@@ -334,23 +325,50 @@ public class Board extends View {
         }
         if (NUM_CELLS == 8) {
             if (actualLevelNumber == 1) {
-                next.setStatus(1);
-                next.setId(28);
-                levelsDb.updateLevel(28, next);
                 Intent intent = new Intent(getContext(), Level28x8.class);
                 super.getContext().startActivity(intent);
             }
             if (actualLevelNumber == 2) {
-                next.setStatus(1);
-                next.setId(38);
-                levelsDb.updateLevel(38, next);
                 Intent intent = new Intent(getContext(), Level38x8.class);
                 super.getContext().startActivity(intent);
             }
         }
         this.invalidate();
-        levelsDb.close();
     }
+private void activateNextLevels(){
+    LevelsDataBase levelsDb = new LevelsDataBase(getContext());
+    levelsDb.open();
+    Level next = new Level();
+    if (NUM_CELLS == 7) {
+        if (actualLevelNumber == 1) {
+            next.setStatus(1);
+            next.setId(27);
+            levelsDb.updateLevel(27, next);
 
+        }
+        if (actualLevelNumber == 2) {
+            next.setStatus(1);
+            next.setId(37);
+            levelsDb.updateLevel(37, next);
+        }
+    }
+    if (NUM_CELLS == 8) {
+        if (actualLevelNumber == 1) {
+            next.setStatus(1);
+            next.setId(28);
+            levelsDb.updateLevel(28, next);
+        }
+        if (actualLevelNumber == 2) {
+            next.setStatus(1);
+            next.setId(38);
+            levelsDb.updateLevel(38, next);
+        }
+    }
+    levelsDb.close();
+}
+    private  void goToHome(){
+        Intent intent = new Intent(getContext(), LevelChoice.class);
+        super.getContext().startActivity(intent);
+    }
 }
 
