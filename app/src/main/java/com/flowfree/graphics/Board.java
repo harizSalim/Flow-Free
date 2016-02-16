@@ -10,14 +10,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
-import android.media.MediaPlayer;
-import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import com.flowfree.db.Level;
+import com.flowfree.db.LevelsDataBase;
+import com.flowfree.home.LevelChoice;
 import com.flowfree.levels.Level18x8;
 import com.flowfree.levels.Level27x7;
 import com.flowfree.levels.Level28x8;
@@ -28,8 +29,11 @@ import com.game.flowfree.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.support.v4.app.ActivityCompat.startActivity;
+
 public class Board extends View {
 
+    public String currentLevel;
     private int NUM_CELLS;
     private int cellWidth;
     private int cellHeight;
@@ -39,12 +43,8 @@ public class Board extends View {
     private Paint paintCircles = new Paint();
     private Path path = new Path();
     private Points currentPoint = null;
-    public String currentLevel;
     private int actualLevelNumber;
     private ArrayList<Points> points;
-    private MediaPlayer mp;
-    private Vibrator vb;
-    private boolean vibrate;
     private int[] couleur, corX, corY;
 
     public Board(Context context, AttributeSet attrs) {
@@ -53,21 +53,7 @@ public class Board extends View {
         this.paintGrid.setStyle(Paint.Style.STROKE);
         this.paintGrid.setColor(Color.WHITE);
         this.paintGrid.setAntiAlias(true);
-
-        mp = MediaPlayer.create(getContext(), R.raw.button_pressed);
-
-        vb = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        boolean sound = prefs.getBoolean("sound_onoff", true);
-        if (sound) {
-            mp.setVolume(1.0f, 1.0f);
-        } else {
-            mp.setVolume(0, 0);
-        }
-        vibrate = prefs.getBoolean("vibration_onoff", true);
-
-
     }
 
     private int xToCol(int x) {
@@ -190,8 +176,6 @@ public class Board extends View {
                 onPath.getCellPath().append(new Cordonnee(c, r));
                 currentPoint = onPath;
             } else if (onPoint != null) {
-                mp.start();
-                //if (vibrate) {vb.vibrate(100);}
                 CellPath newCellPath = new CellPath();
                 newCellPath.append(new Cordonnee(c, r));
                 onPoint.setCellPath(newCellPath);
@@ -220,10 +204,7 @@ public class Board extends View {
                         //check if all flows have been finished
                         boolean finished = true;
                         if (onPoint == currentPoint) {
-                            mp.start();
-                         /*   if (vibrate) {
-                                //vb.vibrate(100);
-                            }*/
+
                             for (Points point : this.points) {
                                 if (!point.finished()) {
                                     finished = false;
@@ -271,7 +252,6 @@ public class Board extends View {
                                     @Override
                                     public void onClick(View v) {
                                         dialog.dismiss();
-                                        mp.release();
                                         ((Activity) getContext()).finish();
                                     }
                                 });
@@ -279,8 +259,6 @@ public class Board extends View {
 
                                 dialog.show();
                             }
-
-
                         }
                     }
                     this.invalidate();
@@ -320,7 +298,7 @@ public class Board extends View {
         return Math.abs(c1 - c2) + Math.abs(r1 - r2) == 1;
     }
 
-    public void reset() {
+    private void reset() {
         for (Points point : points) {
             if (point.getCellPath() != null) {
                 point.getCellPath().reset();
@@ -329,13 +307,23 @@ public class Board extends View {
         this.invalidate();
     }
 
-    public void setNextLevel() {
+    private void setNextLevel() {
+        LevelsDataBase levelsDb = new LevelsDataBase(getContext());
+        levelsDb.open();
+        Level next = new Level();
         if (NUM_CELLS == 7) {
             if (actualLevelNumber == 1) {
+                next.setStatus(1);
+                next.setId(27);
+                levelsDb.updateLevel(27, next);
                 Intent intent = new Intent(getContext(), Level27x7.class);
                 super.getContext().startActivity(intent);
+
             }
             if (actualLevelNumber == 2) {
+                next.setStatus(1);
+                next.setId(37);
+                levelsDb.updateLevel(37, next);
                 Intent intent = new Intent(getContext(), Level37x7.class);
                 super.getContext().startActivity(intent);
             }
@@ -346,15 +334,22 @@ public class Board extends View {
         }
         if (NUM_CELLS == 8) {
             if (actualLevelNumber == 1) {
+                next.setStatus(1);
+                next.setId(28);
+                levelsDb.updateLevel(28, next);
                 Intent intent = new Intent(getContext(), Level28x8.class);
                 super.getContext().startActivity(intent);
             }
             if (actualLevelNumber == 2) {
+                next.setStatus(1);
+                next.setId(38);
+                levelsDb.updateLevel(38, next);
                 Intent intent = new Intent(getContext(), Level38x8.class);
                 super.getContext().startActivity(intent);
             }
         }
         this.invalidate();
+        levelsDb.close();
     }
 
 }

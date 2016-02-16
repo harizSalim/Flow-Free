@@ -1,11 +1,13 @@
 package com.flowfree.levels;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.flowfree.graphics.Board;
+import com.flowfree.home.LevelSelection7;
 import com.game.flowfree.R;
 
 
@@ -29,8 +31,8 @@ public class Level27x7 extends AppCompatActivity {
     }
 
     public void backButtonPressed(View view) {
-        finish();
-        this.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        startActivity(new Intent(this, LevelSelection7.class));
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);;
     }
 
     public void resetPressed(View view) {

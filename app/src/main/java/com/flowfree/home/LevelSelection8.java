@@ -1,11 +1,13 @@
 package com.flowfree.home;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.flowfree.db.LevelsDataBase;
 import com.flowfree.levels.Level18x8;
 import com.flowfree.levels.Level28x8;
 import com.flowfree.levels.Level38x8;
@@ -49,6 +51,9 @@ public class LevelSelection8 extends AppCompatActivity implements View.OnClickLi
         level2 = (Button) findViewById(R.id.level_2_8);
         level3 = (Button) findViewById(R.id.level_3_8);
         back = (Button) findViewById(R.id.back8);
+        //Disabling Buttons
+        setUpLevels();
+        //Setting buttons Listener
         level1.setOnClickListener(this);
         level2.setOnClickListener(this);
         level3.setOnClickListener(this);
@@ -70,7 +75,27 @@ public class LevelSelection8 extends AppCompatActivity implements View.OnClickLi
             this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
         if (v.equals(back)) {
-            finish();
+            startActivity(new Intent(this, LevelChoice.class));
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
+    }
+    private void setUpLevels(){
+        LevelsDataBase levelsDb= new LevelsDataBase(this);
+        levelsDb.open();
+        if(levelsDb.getLevelStatus(28)==0 ){
+            level2.setEnabled(false);
+            level2.setBackgroundColor(Color.LTGRAY);
+        }else{
+            level2.setEnabled(true);
+            level2.setBackgroundColor(Color.WHITE);
+        }
+        if(levelsDb.getLevelStatus(38)==0 ){
+            level3.setEnabled(false);
+            level3.setBackgroundColor(Color.LTGRAY);
+        }else{
+            level3.setEnabled(true);
+            level3.setBackgroundColor(Color.WHITE);
+        }
+        levelsDb.close();
     }
 }

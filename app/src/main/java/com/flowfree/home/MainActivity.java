@@ -5,7 +5,10 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
+import com.flowfree.db.Level;
+import com.flowfree.db.LevelsDataBase;
 import com.game.flowfree.R;
 
 /**
@@ -40,8 +43,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
+        //Initializing dataBase
+        LevelsDataBase levelsDb= new LevelsDataBase(this);
+        Level level27 = new Level(27,0);
+        Level level37 = new Level(37,0);
+        Level level28 = new Level(28,0);
+        Level level38 = new Level(38,0);
+        levelsDb.open();
 
-    }
+        if (levelsDb.isEmpty()) {
+            levelsDb.insertLevel(level27);
+            levelsDb.insertLevel(level37);
+            levelsDb.insertLevel(level28);
+            levelsDb.insertLevel(level38);
+        }
+        levelsDb.close();
+}
 
     protected void onResume() {
         super.onResume();
@@ -57,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonAboutPressed(View view) {
-        //startActivity(new Intent(this, AboutActivity.class));
+       startActivity(new Intent(this, AboutActivity.class));
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
