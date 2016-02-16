@@ -11,54 +11,71 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:background="@mipmap/logo_low_opacity">
+        android:background="@mipmap/logo_low_opacity"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/playButton"
             android:layout_width="250dp"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="200dp"
+            android:background="#ffffff"
             android:onClick="buttonPressed"
             android:text="Play"
             android:textColor="#029acc"
-            android:textSize="20sp"
-            android:background="#ffffff" />
+            android:textSize="20sp" />
+
         <Button
             android:id="@+id/instructions"
             android:layout_width="250dp"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/playButton"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
+            android:background="#ffffff"
             android:onClick="buttonInstructionsPressed"
-            android:text="Instructions"
-            android:layout_below="@id/playButton"
 
+            android:text="Instructions"
             android:textColor="#029acc"
-            android:textSize="20sp"
-            android:background="#ffffff" />
+            android:textSize="20sp" />
+
         <Button
             android:id="@+id/about"
             android:layout_width="250dp"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/instructions"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
+            android:background="#ffffff"
             android:onClick="buttonAboutPressed"
-            android:text="About"
-            android:layout_below="@id/instructions"
 
+            android:text="About"
             android:textColor="#029acc"
-            android:textSize="20sp"
-            android:background="#ffffff" />
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/quitter"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/about"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:background="#ffffff"
+            android:onClick="buttonQuitterPressed"
+
+            android:text="Quit"
+            android:textColor="#029acc"
+            android:textSize="20sp" />
+
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="300dp"
             android:layout_height="200dp"
-            android:id="@+id/imageView"
-            android:src="@mipmap/flow"
-            android:layout_marginTop="20dp"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/flow" />
         <!-- This FrameLayout insets its children based on system windows using
              android:fitsSystemWindows. -->
         <FrameLayout

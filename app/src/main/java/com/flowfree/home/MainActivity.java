@@ -5,7 +5,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.flowfree.db.Level;
 import com.flowfree.db.LevelsDataBase;
@@ -82,6 +81,11 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(new Intent(this, InstructionActivity.class));
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    public void buttonQuitterPressed(View view){
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
     }
 
 
