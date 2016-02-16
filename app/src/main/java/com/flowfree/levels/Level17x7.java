@@ -18,9 +18,14 @@ public class Level17x7 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Colors
+        int green = getApplicationContext().getResources().getColor(R.color.green);
+        int blue = getApplicationContext().getResources().getColor(R.color.blue);
+        int yelow = getApplicationContext().getResources().getColor(R.color.yellow);
+        int orange = getApplicationContext().getResources().getColor(R.color.orange);
 
         setContentView(R.layout.activity_level17x7);
-        int couleurs[] = {Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW, Color.MAGENTA};
+        int couleurs[] = {blue, green, Color.RED, yelow, orange};
         int corX[] = {0, 0, 0, 5, 2, 4, 2, 4, 1, 4};
         int corY[] = {1, 6, 5, 5, 2, 3, 4, 5, 5, 4};
 

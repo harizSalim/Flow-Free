@@ -18,8 +18,15 @@ public class Level28x8 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        int lightGreen = getApplicationContext().getResources().getColor(R.color.lightGreen);
+        int green = getApplicationContext().getResources().getColor(R.color.green);
+        int blue = getApplicationContext().getResources().getColor(R.color.blue);
+        int lightBlue = getApplicationContext().getResources().getColor(R.color.lightBlue);
+        int yellow = getApplicationContext().getResources().getColor(R.color.yellow);
+        int orange = getApplicationContext().getResources().getColor(R.color.orange);
+
         setContentView(R.layout.activity_level28x8);
-        int couleurs[] = {Color.DKGRAY, Color.GREEN, Color.RED, Color.YELLOW, Color.MAGENTA, Color.BLUE, Color.GRAY};
+        int couleurs[] = {lightGreen, green, Color.RED, yellow, orange , blue, lightBlue};
         int corX[] = {2, 2, 6, 6, 1, 3, 5, 5, 3, 4, 2, 5, 4, 6};
         int corY[] = {2, 4, 1, 3, 6, 4, 0, 3, 6, 1, 6, 5, 0, 0};
 
