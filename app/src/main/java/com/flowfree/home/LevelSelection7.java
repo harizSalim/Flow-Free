@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.flowfree.db.LevelsDataBase;
 import com.flowfree.levels.Level17x7;
@@ -85,23 +84,24 @@ public class LevelSelection7 extends AppCompatActivity implements View.OnClickLi
             this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
-    private void setUpLevels(){
-        LevelsDataBase levelsDb= new LevelsDataBase(this);
+
+    private void setUpLevels() {
+        LevelsDataBase levelsDb = new LevelsDataBase(this);
         levelsDb.open();
-       if(levelsDb.getLevelStatus(27)==0 ){
-           level2.setEnabled(false);
-           level2.setBackgroundColor(Color.LTGRAY);
-        }else{
-           level2.setEnabled(true);
-           level2.setBackgroundColor(Color.WHITE);
-       }
-        if(levelsDb.getLevelStatus(37)==0 ){
+        if (levelsDb.getLevelStatus(27) == 0) {
+            level2.setEnabled(false);
+            level2.setBackgroundColor(Color.LTGRAY);
+        } else {
+            level2.setEnabled(true);
+            level2.setBackgroundColor(Color.WHITE);
+        }
+        if (levelsDb.getLevelStatus(37) == 0) {
             level3.setEnabled(false);
             level3.setBackgroundColor(Color.LTGRAY);
-        }else{
+        } else {
             level3.setEnabled(true);
             level3.setBackgroundColor(Color.WHITE);
         }
-    levelsDb.close();
+        levelsDb.close();
     }
 }

@@ -1,6 +1,5 @@
 package com.flowfree.graphics;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -28,8 +27,6 @@ import com.game.flowfree.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.support.v4.app.ActivityCompat.startActivity;
 
 public class Board extends View {
 
@@ -228,8 +225,10 @@ public class Board extends View {
                                 Button againButton = (Button) dialog.findViewById(R.id.level_again);
                                 Button backMenuButton = (Button) dialog.findViewById(R.id.back_to_menu);
                                 Button nextLevelButton = (Button) dialog.findViewById(R.id.next_level);
-                                if (NUM_CELLS == 8 && actualLevelNumber == 3)
+                                if (NUM_CELLS == 8 && actualLevelNumber == 3) {
                                     nextLevelButton.setEnabled(false);
+                                    nextLevelButton.setBackgroundColor(Color.LTGRAY);
+                                }
                                 else {
                                     nextLevelButton.setOnClickListener(new OnClickListener() {
                                         @Override
