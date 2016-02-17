@@ -1,6 +1,8 @@
 package com.flowfree.home;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.*;
@@ -83,17 +85,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonQuitterPressed(View view) {
+          AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you sure,You Want to Quit");
 
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.activity_quit);
-        dialog.setTitle("Are you sure to quit?");
-        Button yesButton = (Button) dialog.findViewById(R.id.yes);
-        Button noMenuButton = (Button) dialog.findViewById(R.id.no);
-
-        yesButton.setOnClickListener(new View.OnClickListener() {
+        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                dialog.dismiss();
+            public void onClick(DialogInterface arg0, int arg1) {
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_HOME);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -101,15 +98,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        noMenuButton.setOnClickListener(new View.OnClickListener() {
-
+        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                dialog.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
+                // finish();
             }
         });
 
-        dialog.show();
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
 
