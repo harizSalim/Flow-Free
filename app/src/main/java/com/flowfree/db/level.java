@@ -6,11 +6,13 @@ package com.flowfree.db;
 public class Level {
     private int id;
     private int status;
-    public Level(int id, int status){
-        this.id=id;
-        this.status=status;
+
+    public Level(int id, int status) {
+        this.id = id;
+        this.status = status;
     }
-    public Level( ){
+
+    public Level() {
 
     }
 

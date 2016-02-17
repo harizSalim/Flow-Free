@@ -1,22 +1,16 @@
 package com.flowfree.home;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.os.Bundle;
+import android.os.*;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.flowfree.db.Level;
 import com.flowfree.db.LevelsDataBase;
 import com.game.flowfree.R;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
+
 public class MainActivity extends AppCompatActivity {
     private static final boolean AUTO_HIDE = true;
     /**
@@ -46,11 +40,11 @@ public class MainActivity extends AppCompatActivity {
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         //Initializing dataBase
-        LevelsDataBase levelsDb= new LevelsDataBase(this);
-        Level level27 = new Level(27,0);
-        Level level37 = new Level(37,0);
-        Level level28 = new Level(28,0);
-        Level level38 = new Level(38,0);
+        LevelsDataBase levelsDb = new LevelsDataBase(this);
+        Level level27 = new Level(27, 0);
+        Level level37 = new Level(37, 0);
+        Level level28 = new Level(28, 0);
+        Level level38 = new Level(38, 0);
         levelsDb.open();
 
         if (levelsDb.isEmpty()) {
@@ -60,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             levelsDb.insertLevel(level38);
         }
         levelsDb.close();
-}
+    }
 
     protected void onResume() {
         super.onResume();
@@ -76,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonAboutPressed(View view) {
-       startActivity(new Intent(this, AboutActivity.class));
+        startActivity(new Intent(this, AboutActivity.class));
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
@@ -86,31 +80,15 @@ public class MainActivity extends AppCompatActivity {
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    public void buttonQuitterPressed(View view){
+    public void buttonQuitterPressed(View view) {
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Are you sure,You wanted to quit");
-
-        alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.addCategory(Intent.CATEGORY_HOME);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        });
-
-        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-  }
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        //android.os.Process.killProcess(android.os.Process.myPid());
+    }
 
 
 }

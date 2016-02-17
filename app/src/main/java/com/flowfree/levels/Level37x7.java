@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
 import com.flowfree.graphics.Board;
 import com.flowfree.home.LevelSelection7;
@@ -44,6 +45,10 @@ public class Level37x7 extends AppCompatActivity {
     public void resetPressed(View view) {
         finish();
         startActivity(getIntent());
+    }
+
+    public void setMovesTextView(String text) {
+        ((TextView) findViewById(R.id.nbmove)).setText(text);
     }
 
 }

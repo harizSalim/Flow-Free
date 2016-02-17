@@ -13,6 +13,7 @@ public class LevelsBDbHelper extends SQLiteOpenHelper {
     private static final String COL_STATUS = "status";
     private static final String CREATE_BDD = "CREATE TABLE " + TABLE_LEVELS + " ("
             + COL_ID + " INTEGER PRIMARY KEY, " + COL_STATUS + " TEXT NOT NULL);";
+
     public LevelsBDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }

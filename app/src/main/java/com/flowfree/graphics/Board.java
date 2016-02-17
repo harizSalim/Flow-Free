@@ -18,6 +18,7 @@ import android.widget.Button;
 import com.flowfree.db.Level;
 import com.flowfree.db.LevelsDataBase;
 import com.flowfree.home.LevelChoice;
+import com.flowfree.levels.Level17x7;
 import com.flowfree.levels.Level18x8;
 import com.flowfree.levels.Level27x7;
 import com.flowfree.levels.Level28x8;
@@ -43,10 +44,12 @@ public class Board extends View {
     private int actualLevelNumber;
     private ArrayList<Points> points;
     private int[] couleur, corX, corY;
+    private int nbMoves;
 
     public Board(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        nbMoves = 0;
         this.paintGrid.setStyle(Paint.Style.STROKE);
         this.paintGrid.setColor(Color.WHITE);
         this.paintGrid.setAntiAlias(true);
@@ -84,6 +87,8 @@ public class Board extends View {
             point = new Points(new Cordonnee(corX[i * 2], corY[i * 2]), new Cordonnee(corX[i * 2 + 1], corY[i * 2 + 1]), couleur[i]);
             points.add(point);
         }
+        nbMoves = 0;
+        this.actualizeMoves();
         this.invalidate();
     }
 
@@ -112,7 +117,7 @@ public class Board extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-    //Drawing the Grid and the Points, and the Path
+        //Drawing the Grid and the Points, and the Path
 
         //draw the grid
         for (int r = 0; r < NUM_CELLS; ++r) {
@@ -154,7 +159,7 @@ public class Board extends View {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-    //Event when The users touches the Screen
+        //Event when The users touches the Screen
         int x = (int) event.getX();
         int y = (int) event.getY();
         int c = xToCol(x);
@@ -172,11 +177,17 @@ public class Board extends View {
             if (onPath != null) {
                 onPath.getCellPath().append(new Cordonnee(c, r));
                 currentPoint = onPath;
+                nbMoves++;
+                this.actualizeMoves();
+
             } else if (onPoint != null) {
                 CellPath newCellPath = new CellPath();
                 newCellPath.append(new Cordonnee(c, r));
                 onPoint.setCellPath(newCellPath);
                 currentPoint = onPoint;
+                nbMoves++;
+                this.actualizeMoves();
+
             } else {
                 currentPoint = null;
             }
@@ -191,9 +202,8 @@ public class Board extends View {
                     Points cross = isInFlowPaths(movedTo);
                     Points onPoint = isInFlowPoints(movedTo);
                     if (areNeighbours(last.getCol(), last.getRow(), c, r) &&
-                            //(cross == null || cross == currentFlow) && //check if no other path is crossed
-                            !(currentPoint.finished() && cross != currentPoint) && //check if not extending current path over the endpoint
-                            (onPoint == null || onPoint == currentPoint)) { //check if no other point is crossed
+                            !(currentPoint.finished() && cross != currentPoint) &&
+                            (onPoint == null || onPoint == currentPoint)) {
                         currentPoint.getCellPath().append(movedTo);
                         if (cross != null && cross != currentPoint) {
                             cross.getCellPath().removeFrom(movedTo);
@@ -227,8 +237,7 @@ public class Board extends View {
                                 if (NUM_CELLS == 8 && actualLevelNumber == 3) {
                                     nextLevelButton.setEnabled(false);
                                     nextLevelButton.setBackgroundColor(Color.LTGRAY);
-                                }
-                                else {
+                                } else {
                                     nextLevelButton.setOnClickListener(new OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -251,7 +260,7 @@ public class Board extends View {
                                         goToHome();
                                     }
                                 });
-                            dialog.show();
+                                dialog.show();
                             }
                         }
                     }
@@ -266,6 +275,7 @@ public class Board extends View {
         paintPath.setColor(color);
         invalidate();
     }
+
     public Points isInFlowPoints(Cordonnee co) {
         for (Points point : this.points) {
             if (point.getX().equals(co) || point.getY().equals(co)) {
@@ -296,11 +306,13 @@ public class Board extends View {
                 point.getCellPath().reset();
             }
         }
+        nbMoves = 0;
+        this.actualizeMoves();
         this.invalidate();
     }
 
     private void setNextLevel() {
-    //Setting next levels, when the level is passed
+        //Setting next levels, when the level is passed
         if (NUM_CELLS == 7) {
             if (actualLevelNumber == 1) {
                 Intent intent = new Intent(getContext(), Level27x7.class);
@@ -327,41 +339,72 @@ public class Board extends View {
         }
         this.invalidate();
     }
-private void activateNextLevels(){
-        //Activating  Next Level when current Level is Passed
-    LevelsDataBase levelsDb = new LevelsDataBase(getContext());
-    levelsDb.open();
-    Level next = new Level();
-    if (NUM_CELLS == 7) {
-        if (actualLevelNumber == 1) {
-            next.setStatus(1);
-            next.setId(27);
-            levelsDb.updateLevel(27, next);
 
+    private void activateNextLevels() {
+        //Activating  Next Level when current Level is Passed
+        nbMoves = 0;
+        this.actualizeMoves();
+        LevelsDataBase levelsDb = new LevelsDataBase(getContext());
+        levelsDb.open();
+        Level next = new Level();
+        if (NUM_CELLS == 7) {
+            if (actualLevelNumber == 1) {
+                next.setStatus(1);
+                next.setId(27);
+                levelsDb.updateLevel(27, next);
+
+            }
+            if (actualLevelNumber == 2) {
+                next.setStatus(1);
+                next.setId(37);
+                levelsDb.updateLevel(37, next);
+            }
         }
-        if (actualLevelNumber == 2) {
-            next.setStatus(1);
-            next.setId(37);
-            levelsDb.updateLevel(37, next);
+        if (NUM_CELLS == 8) {
+            if (actualLevelNumber == 1) {
+                next.setStatus(1);
+                next.setId(28);
+                levelsDb.updateLevel(28, next);
+            }
+            if (actualLevelNumber == 2) {
+                next.setStatus(1);
+                next.setId(38);
+                levelsDb.updateLevel(38, next);
+            }
         }
+        levelsDb.close();
     }
-    if (NUM_CELLS == 8) {
-        if (actualLevelNumber == 1) {
-            next.setStatus(1);
-            next.setId(28);
-            levelsDb.updateLevel(28, next);
-        }
-        if (actualLevelNumber == 2) {
-            next.setStatus(1);
-            next.setId(38);
-            levelsDb.updateLevel(38, next);
-        }
-    }
-    levelsDb.close();
-}
-    private  void goToHome(){//Go To Home Screen
+
+    private void goToHome() {//Go To Home Screen
         Intent intent = new Intent(getContext(), LevelChoice.class);
         super.getContext().startActivity(intent);
+    }
+
+    private int actualizeMoves() {
+        String movesText = "Number of moves: " + nbMoves + " Moves";
+        if (NUM_CELLS == 7) {
+            if (actualLevelNumber == 1) {
+                ((Level17x7) getContext()).setMovesTextView(movesText);
+            }
+            if (actualLevelNumber == 2) {
+                ((Level27x7) getContext()).setMovesTextView(movesText);
+            }
+            if (actualLevelNumber == 3) {
+                ((Level37x7) getContext()).setMovesTextView(movesText);
+            }
+        }
+        if (NUM_CELLS == 8) {
+            if (actualLevelNumber == 1) {
+                ((Level18x8) getContext()).setMovesTextView(movesText);
+            }
+            if (actualLevelNumber == 2) {
+                ((Level28x8) getContext()).setMovesTextView(movesText);
+            }
+            if (actualLevelNumber == 3) {
+                ((Level38x8) getContext()).setMovesTextView(movesText);
+            }
+        }
+        return nbMoves;
     }
 }
 
