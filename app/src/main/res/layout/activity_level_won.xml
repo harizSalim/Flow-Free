@@ -9,9 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
-        android:textColor="#0099cc"
         android:padding="5dp"
-        android:text=" Next Level " />
+        android:text=" Next Level "
+        android:textColor="#0099cc" />
 
     <View
         android:id="@+id/divider1"
@@ -26,9 +26,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/divider1"
         android:background="#ffffff"
-        android:textColor="#0099cc"
         android:padding="5dp"
-        android:text=" Play again " />
+        android:text=" Play again "
+        android:textColor="#0099cc" />
 
     <View
         android:id="@+id/divider2"
@@ -43,8 +43,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/divider2"
         android:background="#ffffff"
-        android:textColor="#0099cc"
         android:padding="5dp"
-        android:text=" Back to Menu " />
+        android:text=" Back to Menu "
+        android:textColor="#0099cc" />
 
 </RelativeLayout>

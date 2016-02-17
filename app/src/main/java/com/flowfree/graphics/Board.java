@@ -230,7 +230,7 @@ public class Board extends View {
                                 }
                                 final Dialog dialog = new Dialog(getContext());//Dialog when the Level is Passed
                                 dialog.setContentView(R.layout.activity_level_won);
-                                dialog.setTitle("Congratulations!!");
+                                dialog.setTitle("BRAVO!! You won (" + nbMoves + " moves)");
                                 Button againButton = (Button) dialog.findViewById(R.id.level_again);
                                 Button backMenuButton = (Button) dialog.findViewById(R.id.back_to_menu);
                                 Button nextLevelButton = (Button) dialog.findViewById(R.id.next_level);
@@ -342,8 +342,6 @@ public class Board extends View {
 
     private void activateNextLevels() {
         //Activating  Next Level when current Level is Passed
-        nbMoves = 0;
-        this.actualizeMoves();
         LevelsDataBase levelsDb = new LevelsDataBase(getContext());
         levelsDb.open();
         Level next = new Level();
@@ -381,7 +379,7 @@ public class Board extends View {
     }
 
     private int actualizeMoves() {
-        String movesText = "Number of moves: " + nbMoves + " Moves";
+        String movesText = "Moves: " + nbMoves + " - Points: " + couleur.length;
         if (NUM_CELLS == 7) {
             if (actualLevelNumber == 1) {
                 ((Level17x7) getContext()).setMovesTextView(movesText);
