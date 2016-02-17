@@ -88,10 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void buttonQuitterPressed(View view){
 
-        /*Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);*/
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Are you sure,You wanted to quit");
 
@@ -108,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-               // finish();
+
             }
         });
 
