@@ -1,10 +1,12 @@
 package com.flowfree.home;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.*;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 
 import com.flowfree.db.Level;
 import com.flowfree.db.LevelsDataBase;
@@ -82,12 +84,32 @@ public class MainActivity extends AppCompatActivity {
 
     public void buttonQuitterPressed(View view) {
 
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        //android.os.Process.killProcess(android.os.Process.myPid());
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.activity_quit);
+        dialog.setTitle("Are you sure to quit?");
+        Button yesButton = (Button) dialog.findViewById(R.id.yes);
+        Button noMenuButton = (Button) dialog.findViewById(R.id.no);
+
+        yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
+        noMenuButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
 
