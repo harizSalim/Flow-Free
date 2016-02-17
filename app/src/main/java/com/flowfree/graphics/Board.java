@@ -112,7 +112,7 @@ public class Board extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
+    //Drawing the Grid and the Points, and the Path
 
         //draw the grid
         for (int r = 0; r < NUM_CELLS; ++r) {
@@ -123,7 +123,7 @@ public class Board extends View {
                 canvas.drawRect(rect, paintGrid);
             }
         }
-        for (int i = 0; i < couleur.length; i++) {
+        for (int i = 0; i < couleur.length; i++) {//Draw Points
             paintCircles.setColor(couleur[i]);
             canvas.drawCircle(colToX(corX[i * 2]) + cellWidth / 2, rowToY(corY[i * 2]) + cellHeight / 2, cellWidth / 4, paintCircles);
             canvas.drawCircle(colToX(corX[i * 2 + 1]) + cellWidth / 2, rowToY(corY[i * 2 + 1]) + cellHeight / 2, cellWidth / 4, paintCircles);
@@ -147,14 +147,14 @@ public class Board extends View {
                     path.lineTo(colToX(co.getCol()) + cellWidth / 2, rowToY(co.getRow()) + cellHeight / 2);
                 }
             }
-            System.out.println(path);
+
             canvas.drawPath(path, paintPath);
         }
 
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-
+    //Event when The users touches the Screen
         int x = (int) event.getX();
         int y = (int) event.getY();
         int c = xToCol(x);
@@ -182,7 +182,7 @@ public class Board extends View {
             }
             this.invalidate();
 
-        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {//Drawing the Path
             if (currentPoint != null) {
                 if (null != currentPoint.getCellPath() && !currentPoint.getCellPath().isEmpty()) {
                     Cordonnee movedTo = new Cordonnee(c, r);
@@ -218,10 +218,9 @@ public class Board extends View {
                                     }
                                     this.activateNextLevels();
                                 }
-                                final Dialog dialog = new Dialog(getContext());
+                                final Dialog dialog = new Dialog(getContext());//Dialog when the Level is Passed
                                 dialog.setContentView(R.layout.activity_level_won);
                                 dialog.setTitle("Congratulations!!");
-
                                 Button againButton = (Button) dialog.findViewById(R.id.level_again);
                                 Button backMenuButton = (Button) dialog.findViewById(R.id.back_to_menu);
                                 Button nextLevelButton = (Button) dialog.findViewById(R.id.next_level);
@@ -233,13 +232,11 @@ public class Board extends View {
                                     nextLevelButton.setOnClickListener(new OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-
                                             dialog.dismiss();
                                             setNextLevel();
                                         }
                                     });
                                 }
-
                                 againButton.setOnClickListener(new OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -254,7 +251,6 @@ public class Board extends View {
                                         goToHome();
                                     }
                                 });
-
                             dialog.show();
                             }
                         }
@@ -263,7 +259,6 @@ public class Board extends View {
                 }
             }
         }
-
         return true;
     }
 
@@ -271,7 +266,6 @@ public class Board extends View {
         paintPath.setColor(color);
         invalidate();
     }
-
     public Points isInFlowPoints(Cordonnee co) {
         for (Points point : this.points) {
             if (point.getX().equals(co) || point.getY().equals(co)) {
@@ -296,7 +290,7 @@ public class Board extends View {
         return Math.abs(c1 - c2) + Math.abs(r1 - r2) == 1;
     }
 
-    private void reset() {
+    private void reset() {// Redrawi initial Graph
         for (Points point : points) {
             if (point.getCellPath() != null) {
                 point.getCellPath().reset();
@@ -306,12 +300,11 @@ public class Board extends View {
     }
 
     private void setNextLevel() {
-
+    //Setting next levels, when the level is passed
         if (NUM_CELLS == 7) {
             if (actualLevelNumber == 1) {
                 Intent intent = new Intent(getContext(), Level27x7.class);
                 super.getContext().startActivity(intent);
-
             }
             if (actualLevelNumber == 2) {
                 Intent intent = new Intent(getContext(), Level37x7.class);
@@ -335,6 +328,7 @@ public class Board extends View {
         this.invalidate();
     }
 private void activateNextLevels(){
+        //Activating  Next Level when current Level is Passed
     LevelsDataBase levelsDb = new LevelsDataBase(getContext());
     levelsDb.open();
     Level next = new Level();
@@ -365,7 +359,7 @@ private void activateNextLevels(){
     }
     levelsDb.close();
 }
-    private  void goToHome(){
+    private  void goToHome(){//Go To Home Screen
         Intent intent = new Intent(getContext(), LevelChoice.class);
         super.getContext().startActivity(intent);
     }
